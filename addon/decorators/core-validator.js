@@ -119,7 +119,9 @@ function coreValidator(constructor) {
       let propertyValue = get(this, property);
       // If the property is an async relationship.
       if (this._modelRelations() && !isBlank(this._modelRelations()[property])) {
-        propertyValue = get(this, `${property}.content`);
+        if (this._modelRelations()[property]['isAsync']) {
+          propertyValue = get(this, `${property}.content`);
+        }
       }
       if (isBlank(propertyValue)) {
         set(this, 'isValidNow', false);
